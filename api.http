@@ -1,0 +1,9 @@
+post http://localhost:4000/api/users
+Content-Type: application/json
+
+{
+    "name":"cantarino2",
+    "document":"011887741",
+    "email":"eus@eu.com",
+    "password": "s3nh4#!"
+}

@@ -9,6 +9,7 @@ defmodule ElixirBankWeb.Router do
     pipe_through :api
 
     get "/", WelcomeController, :index
+    resources "/users", UsersController, only: [:show, :create, :update, :delete]
   end
 
   # Enable LiveDashboard in development
