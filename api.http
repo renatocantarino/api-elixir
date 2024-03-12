@@ -3,6 +3,9 @@ Content-Type: application/json
 
 {
     "name":"cantarino2",
-    "document":"011887741"
+    "document":"011887741",
+    "email": "vc@eu.com",
+    "password": "s3!"
+
     
 }

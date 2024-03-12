@@ -1,4 +1,4 @@
-defmodule ElixirBank.Users.CreateUser do
+defmodule ElixirBank.Users.Create do
   alias ElixirBank.Users.User
   alias ElixirBank.Repo
 
