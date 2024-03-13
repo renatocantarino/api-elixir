@@ -8,10 +8,14 @@ defmodule ElixirBankWeb.UsersJSON do
     }
   end
 
+  def get(%{user: user}), do: %{data: data(user)}
+  def update(%{user: user}), do: %{message: "user atualizado com sucesso", data: data(user)}
+
   defp data(%User{} = user) do
     %{
       id: user.id,
       name: user.name,
+      document: user.document,
       email: user.email
     }
   end

@@ -2,8 +2,10 @@ defmodule ElixirBank.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @required_params [:name, :password, :email, :document]
+  @required_params_create [:name, :password, :email, :document]
+  @required_params_update [:name, :email, :document]
 
+  # @derive {Jason.Encoder, only: [:name, :email]}
   schema "users" do
     field :name, :string
     field :password, :string, virtual: true
@@ -14,17 +16,30 @@ defmodule ElixirBank.Users.User do
     timestamps()
   end
 
-  def changeset(user \\ %__MODULE__{}, params) do
+  def changeset(params) do
+    %__MODULE__{}
+    |> cast(params, @required_params_create)
+    |> do_validatons(@required_params_create)
+    |> criptoPassword()
+  end
+
+  def changeset(user, params) do
     user
-    |> cast(params, @required_params)
-    |> validate_required(@required_params)
-    |> validate_length(:name, min: 2)
-    |> validate_format(:email, ~r/@/)
+    |> cast(params, @required_params_create)
+    |> do_validatons(@required_params_update)
     |> criptoPassword()
   end
 
   defp criptoPassword(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
     change(changeset, Argon2.add_hash(password))
+  end
+
+  def do_validatons(changeset, fields) do
+    changeset
+    |> validate_required(fields)
+    |> validate_length(:name, min: 2)
+    |> validate_length(:document, min: 6)
+    |> validate_format(:email, ~r/@/)
   end
 
   defp criptoPassword(changeset), do: changeset
