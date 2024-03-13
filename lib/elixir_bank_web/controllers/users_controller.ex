@@ -26,7 +26,7 @@ defmodule ElixirBankWeb.UsersController do
     with {:ok, %User{} = user} <- Users.delete(id) do
       conn
       |> put_status(:ok)
-      |> render(:delete, user)
+      |> render(:delete, user: user)
     end
   end
 
