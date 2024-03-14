@@ -30,6 +30,8 @@ defmodule ElixirBank.Users.User do
     |> criptoPassword()
   end
 
+  defp criptoPassword(changeset), do: changeset
+
   defp criptoPassword(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
     change(changeset, Argon2.add_hash(password))
   end
@@ -41,6 +43,4 @@ defmodule ElixirBank.Users.User do
     |> validate_length(:document, min: 6)
     |> validate_format(:email, ~r/@/)
   end
-
-  defp criptoPassword(changeset), do: changeset
 end

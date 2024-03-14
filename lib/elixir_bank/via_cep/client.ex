@@ -1,4 +1,4 @@
-defmodule ElixirBank.ViaCep.HttpClient do
+defmodule ElixirBank.ViaCep.Client do
   use Tesla
 
   plug Tesla.Middleware.BaseUrl, "https://viacep.com.br/ws"

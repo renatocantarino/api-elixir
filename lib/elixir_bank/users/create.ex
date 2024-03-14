@@ -1,17 +1,13 @@
 defmodule ElixirBank.Users.Create do
   alias ElixirBank.Users.User
   alias ElixirBank.Repo
+  alias ElixirBank.ViaCep.Client, as: ViaCepClient
 
-  def execute(params) do
-    IO.puts("execute")
-
-    params
-    |> User.changeset()
-    |> Repo.insert()
-
-    # |> handle()
+  def execute(%{"cep" => cep} = params) do
+    with {:ok, _result} <- ViaCepClient.call(cep) do
+      params
+      |> User.changeset()
+      |> Repo.insert()
+    end
   end
-
-  # defp handle({:ok, user}), do: user
-  # defp handle({:error, changeset}), do: changeset
 end
