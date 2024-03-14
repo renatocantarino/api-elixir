@@ -25,5 +25,28 @@ defmodule ElixirBankWeb.UsersControllerTest do
                "message" => "user criado com sucesso"
              } = response
     end
+
+    test "error when user create", %{conn: conn} do
+      params = %{
+        name: "cantarino2",
+        document: "011",
+        email: "vc",
+        password: "s3!"
+      }
+
+      response =
+        conn
+        |> post(~p"/api/users", params)
+        |> json_response(:unprocessable_entity)
+
+      expected = %{
+        "errors" => %{
+          "document" => ["should be at least 6 character(s)"],
+          "email" => ["has invalid format"]
+        }
+      }
+
+      assert expected = response
+    end
   end
 end
