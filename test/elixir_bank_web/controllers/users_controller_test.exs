@@ -2,15 +2,11 @@ defmodule ElixirBankWeb.UsersControllerTest do
   use ElixirBankWeb.ConnCase
 
   describe "create/2" do
-    test "sucess call external api" do
-    end
-  end
-
-  describe "create/2" do
     test "sucess when user create", %{conn: conn} do
       params = %{
         name: "cantarino2",
         document: "011887741",
+        cep: "71995385",
         email: "vc@eu.com",
         password: "s3!"
       }
@@ -36,6 +32,7 @@ defmodule ElixirBankWeb.UsersControllerTest do
         name: "cantarino2",
         document: "011",
         email: "vc",
+        cep: "71995385",
         password: "s3!"
       }
 

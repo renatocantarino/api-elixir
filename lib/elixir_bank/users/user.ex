@@ -2,13 +2,14 @@ defmodule ElixirBank.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @required_params_create [:name, :password, :email, :document]
-  @required_params_update [:name, :email, :document]
+  @required_params_create [:name, :password, :cep, :email, :document]
+  @required_params_update [:name, :email, :cep, :document]
 
   # @derive {Jason.Encoder, only: [:name, :email]}
   schema "users" do
     field :name, :string
     field :password, :string, virtual: true
+    field :cep, :string, virtual: true
     field :password_hash, :string
     field :email, :string
     field :document, :string
@@ -30,12 +31,6 @@ defmodule ElixirBank.Users.User do
     |> criptoPassword()
   end
 
-  defp criptoPassword(changeset), do: changeset
-
-  defp criptoPassword(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
-    change(changeset, Argon2.add_hash(password))
-  end
-
   def do_validatons(changeset, fields) do
     changeset
     |> validate_required(fields)
@@ -43,4 +38,10 @@ defmodule ElixirBank.Users.User do
     |> validate_length(:document, min: 6)
     |> validate_format(:email, ~r/@/)
   end
+
+  defp criptoPassword(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
+    change(changeset, Argon2.add_hash(password))
+  end
+
+  defp criptoPassword(changeset), do: changeset
 end

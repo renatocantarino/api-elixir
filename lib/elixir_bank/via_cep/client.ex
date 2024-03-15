@@ -1,11 +1,16 @@
 defmodule ElixirBank.ViaCep.Client do
   use Tesla
 
-  plug Tesla.Middleware.BaseUrl, "https://viacep.com.br/ws"
+  alias ElixirBank.ViaCep.ClientBehavior
+
+  @default_url "https://viacep.com.br/ws"
   plug Tesla.Middleware.JSON
 
-  def call(cep) do
-    "/#{cep}/json"
+  @behaviour ClientBehavior
+
+  @impl ClientBehavior
+  def call(url \\ @default_url, cep) do
+    "#{url}/#{cep}/json"
     |> get()
     |> handler()
   end
