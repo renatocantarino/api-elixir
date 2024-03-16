@@ -1,3 +1,3 @@
-defmodule ElixirBank.ViaCep.ClientBehavior do
+defmodule ElixirBank.ViaCep.ClientBehaviour do
   @callback call(String.t()) :: {:ok, map()} | {:error, :atom}
 end

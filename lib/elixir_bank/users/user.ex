@@ -9,7 +9,7 @@ defmodule ElixirBank.Users.User do
   schema "users" do
     field :name, :string
     field :password, :string, virtual: true
-    field :cep, :string, virtual: true
+    field :cep, :string
     field :password_hash, :string
     field :email, :string
     field :document, :string

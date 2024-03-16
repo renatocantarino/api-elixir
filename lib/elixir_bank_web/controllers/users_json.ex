@@ -17,6 +17,7 @@ defmodule ElixirBankWeb.UsersJSON do
     %{
       id: user.id,
       name: user.name,
+      cep: user.cep,
       document: user.document,
       email: user.email
     }

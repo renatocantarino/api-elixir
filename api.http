@@ -3,12 +3,13 @@ Content-Type: application/json
 
 {
     "name":"cantarino2",
-    "document":"011887741",
+    "cep": "71995385",
+    "document": "sasasa",
     "email": "vc@eu.com",
-    "password": "s3!"
-
-    
+    "password": "s3nh4!!"    
 }
+
+
 
 ###
 PUT http://localhost:4000/api/users/1

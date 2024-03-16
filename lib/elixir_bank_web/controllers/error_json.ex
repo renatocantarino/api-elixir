@@ -3,28 +3,30 @@ defmodule ElixirBankWeb.ErrorJSON do
     %{errors: %{detail: Phoenix.Controller.status_message_from_template(template)}}
   end
 
-  # def error(%{status: :not_found}) do
-  #   %{
-  #     status: :not_found,
-  #     message: "A busca com os parametros informado nao encontrado"
-  #   }
-  # end
+  def error(%{status: :not_found}) do
+    %{
+      status: :not_found,
+      message: "Resource not found"
+    }
+  end
 
   def error(%{status: status}) do
     %{status: status}
   end
 
+  def error(%{msg: msg}) do
+    %{message: msg}
+  end
+
   def error(%{changeset: changeset}) do
     %{
-      errors: Ecto.Changeset.traverse_errors(changeset, &translate_error/1)
+      errors: Ecto.Changeset.traverse_errors(changeset, &translate_errors/1)
     }
   end
 
-  defp translate_error({msg, opts}) do
+  defp translate_errors({msg, opts}) do
     Regex.replace(~r"%{(\w+)}", msg, fn _, key ->
-      opts
-      |> Keyword.get(String.to_existing_atom(key), key)
-      |> to_string()
+      opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
     end)
   end
 end

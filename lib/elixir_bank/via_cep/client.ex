@@ -1,33 +1,33 @@
 defmodule ElixirBank.ViaCep.Client do
   use Tesla
 
-  alias ElixirBank.ViaCep.ClientBehavior
+  alias ElixirBank.ViaCep.ClientBehaviour
 
   @default_url "https://viacep.com.br/ws"
   plug Tesla.Middleware.JSON
 
-  @behaviour ClientBehavior
+  @behaviour ClientBehaviour
 
-  @impl ClientBehavior
+  @impl ClientBehaviour
   def call(url \\ @default_url, cep) do
     "#{url}/#{cep}/json"
     |> get()
-    |> handler()
+    |> handle_response()
   end
 
-  defp handler({:ok, %Tesla.Env{status: 200, body: %{"erro" => true}}}) do
+  defp handle_response({:ok, %Tesla.Env{status: 200, body: %{"erro" => true}}}) do
     {:error, :not_found}
   end
 
-  defp handler({:ok, %Tesla.Env{status: 200, body: body}}) do
-    {:error, body}
+  defp handle_response({:ok, %Tesla.Env{status: 200, body: body}}) do
+    {:ok, body}
   end
 
-  defp handler({:ok, %Tesla.Env{status: 400}}) do
+  defp handle_response({:ok, %Tesla.Env{status: 400}}) do
     {:error, :bad_request}
   end
 
-  defp handler({:error, _}) do
+  defp handle_response({:error, _reason}) do
     {:error, :internal_server_error}
   end
 end
