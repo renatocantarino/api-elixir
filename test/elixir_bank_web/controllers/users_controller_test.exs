@@ -7,7 +7,7 @@ defmodule ElixirBankWeb.UsersControllerTest do
   setup do
     params = %{
       "name" => "João",
-      "document" => "sasasa",
+      "document" => "01185983171",
       "cep" => "29560000",
       "email" => "joao@frutas.com",
       "password" => "123456"
@@ -45,7 +45,7 @@ defmodule ElixirBankWeb.UsersControllerTest do
       assert %{
                "data" => %{
                  "cep" => "29560000",
-                 "document" => "sasasasa",
+                 "document" => "01185983171",
                  "email" => "joao@frutas.com",
                  "id" => _id,
                  "name" => "João"
