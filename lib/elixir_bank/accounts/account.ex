@@ -1,4 +1,4 @@
-defmodule ElixirBank.Account.Account do
+defmodule ElixirBank.Accounts.Account do
   use Ecto.Schema
   alias ElixirBank.Users.User
   import Ecto.Changeset
