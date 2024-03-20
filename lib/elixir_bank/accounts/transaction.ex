@@ -5,7 +5,11 @@ defmodule ElixirBank.Accounts.Transaction do
   alias Accounts.Account
   alias Ecto.Multi
 
-  def execute(from_acc, to_acc, value) do
+  def execute(%{
+        "from_account_id" => from_acc,
+        "to_account_id" => to_acc,
+        "value" => value
+      }) do
     with %Account{} = from <- Repo.get(Account, from_acc),
          %Account{} = to <- Repo.get(Account, to_acc),
          {:ok, value} <- Decimal.cast(value) do
@@ -13,11 +17,17 @@ defmodule ElixirBank.Accounts.Transaction do
       |> withDraw(from, value)
       |> deposit(to, value)
       |> Repo.transaction()
+      |> handle_transaction()
     else
       nil -> {:error, :not_found}
-      :error -> {:error, "value invalid"}
+      :error -> {:error, "Invalid value"}
     end
   end
+
+  def execute(_), do: {:error, "Invalid params"}
+
+  defp handle_transaction({:ok, _result} = result), do: result
+  defp handle_transaction({:error, _op, reason, _}), do: {:error, reason}
 
   defp withDraw(multi, from_acc, value) do
     balance_updated = Decimal.sub(from_acc.balance, value)

@@ -10,7 +10,8 @@ defmodule ElixirBankWeb.Router do
 
     get "/", WelcomeController, :index
     resources "/users", UsersController, only: [:show, :create, :update, :delete]
-    post "/accounts", AccountsController, only: [:show, :create]
+    post "/accounts", AccountsController, :create
+    post "/accounts/transaction", AccountsController, :transaction
   end
 
   # Enable LiveDashboard in development

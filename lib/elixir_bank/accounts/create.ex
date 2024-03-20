@@ -1,5 +1,5 @@
 defmodule ElixirBank.Accounts.Create do
-  alias ElixirBank.Account.Account
+  alias ElixirBank.Accounts.Account
   alias ElixirBank.Repo
 
   def execute(params) do

@@ -10,6 +10,14 @@ defmodule ElixirBankWeb.AccountsJSON do
 
   def get(%{account: account}), do: %{data: data(account)}
 
+  def transaction(%{transaction: %{withdraw: from, deposit: to}}) do
+    %{
+      message: "transferencia realizada",
+      from: data(from),
+      to: data(to)
+    }
+  end
+
   def update(%{account: account}),
     do: %{message: "user atualizado com sucesso", data: data(account)}
 
